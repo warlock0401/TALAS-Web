@@ -1,0 +1,163 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f0f0f0;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #ff6f61;
+    padding: 10px 20px;
+    color: white;
+}
+
+.left-section {
+    display: flex;
+    align-items: center;
+    background-color: #ff6f61;
+    
+
+}
+
+.left-section .logo {
+    display: flex;
+    align-items: center;
+    background-color: #fff;
+    border-radius: 10px;
+    margin-left: 0%;
+    padding: 10px;
+
+    
+}
+
+.left-section .logo img {
+    width: 50px;
+    margin-left: 0px;
+    height: 50px;
+}
+
+.left-section .contact-us {
+    display: flex;
+    align-items: right;
+    margin-left: 10px;
+
+}
+
+.left-section .contact-us a {
+    margin: 0 5px;
+}
+
+.left-section .contact-us img {
+    width: 20px;
+}
+
+
+.right-section {
+    display: flex;
+    align-items: center;    
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.right-section input {
+    padding: 5px;
+    margin-right: 10px;
+    border: none;
+    border-radius: 5px;
+    width: 300px;
+    height: 30px;
+}
+
+main {
+    display: flex;
+    padding: 20px;
+}
+
+aside {
+    width: 20%;
+    margin-right: 20px;
+}
+
+aside h2 {
+    background-color: #ff6f61;
+    color: white;
+    padding: 10px;
+    margin: 0;
+    border-radius: 5px;
+}
+
+aside ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+li {
+    padding: 5px;
+    cursor: pointer;
+}
+
+.selected {
+    background-color: lightpink;
+}
+aside ul li {
+    background-color: #fff;
+    margin: 10px 0;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+aside ul li a {
+    text-decoration: none;
+    color: #333;
+}
+
+
+.news {
+    width: 80%;
+}
+
+.news-item {
+    display: flex;
+    justify-content: space-between;
+    /* align-items: center; */
+    background-color: white;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.news-content {
+    width: 70%;
+    height: 150px;
+    /* background-color: #ddd; */
+}
+
+.radar-chart {
+    width: 25%;
+    height: 170px;
+    width: 210px;
+    background-color: #eee;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+/* .radar-chart::before {
+    content: '';
+    width: 100px;
+    height: 100px;
+    border: 2px solid red;
+    position: absolute;
+    top: 25px;
+    left: 25px;
+} */

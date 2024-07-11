@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TALAS by PukulEnam</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+    <header>
+        <div class="left-section">
+            <div class="logo">
+                <img src="Logo.png" alt="TALAS Logo">
+                <img src="Title.png" class="title" style="width: 165px; height: 45px; margin-left: 5px;">
+            </div>
+            <div class="contact-us">
+                <a href="#"><img src="instagram.png" alt="Instagram"></a>
+                <a href="#"><img src="whatsapp.png" alt="WhatsApp"></a>
+                <a href="#"><img src="facebook.png" alt="Facebook"></a>
+                <a href="#"><img src="linkedin.png" alt="LinkedIn"></a>
+            </div>
+        </div>
+        <div class="right-section">
+            <input type="text" id="searchBar" placeholder="Search">
+            <span>Tuesday, July 9, 2024</span>
+        </div>
+        <script>
+            // Get the search bar element
+            var searchBar = document.getElementById('searchBar');
+    
+            // Add an event listener for the click event
+            searchBar.addEventListener('click', function() {
+                // Change the placeholder text of the search bar
+                searchBar.placeholder = 'Start typing to search...';
+            });
+            searchBar.addEventListener('blur', function() {
+            // Change the placeholder text back to the default
+            searchBar.placeholder = 'Search...';
+            });
+        </script>
+    </header>
+    <main>
+        <aside>
+            <h2>Trending Topics</h2>
+            <ul id="topic-list">
+                <li><a href="#">US</a></li>
+                <li><a href="#">EURO 2024</a></li>
+                <li><a href="#">2024 Election</a></li>
+                <li><a href="#">World</a></li>
+                <li><a href="#">Health</a></li>
+            </ul>
+        </aside>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                // Get all list items within the ul
+                var listItems = document.querySelectorAll('#topic-list li');
+    
+                // Add click event listeners to each list item
+                listItems.forEach(function(item) {
+                    item.addEventListener('click', function() {
+                        // Remove the 'selected' class from all list items
+                        listItems.forEach(function(li) {
+                            li.classList.remove('selected');
+                        });
+    
+                        // Add the 'selected' class to the clicked list item
+                        item.classList.add('selected');
+                    });
+                });
+            });
+        </script>
+        <section class="news">
+            <div class="news-item">
+                <div class="topic-content" id="topic-content">
+                    <h1><strong>News from EURO 2024</strong></strong></h1>
+                    <p>Stay current with all the latest and breaking news about <b>EURO 2024</b>, compare headlines and perspectives between news sources on stories happening today. In total, <b>8,769</b> stories have been published about <b>EURO 2024</b> which Ground News has aggregated in the past 3 months.</p>
+                </div>
+                <!-- <div class="radar-chart"></div> -->
+            </div>
+            <div class="news-item">
+                <div class="news-content">
+                    <a href="#" style="text-decoration: none; color: black;"><strong>Night owls have better brain function than morning people, study suggests</strong></a>
+                </div>
+                <div class="radar-chart">
+                    <div style="width: 180px; margin: auto;">
+                        <canvas id="radarChart"></canvas>
+                    </div>
+                
+                    <script>
+                        // Radar chart data
+                        // Define your variables
+                        let koalisi = 65;
+                        let liberal = 59;
+                        let bias = 90;
+                        let oposisi = 100-koalisi;
+                        let konservatif = 100-liberal;
+                        let nonBias = 100-bias;
+                
+                // Radar chart data
+                        var radarData = {
+                            labels: ['Koalisi', 'Liberal', 'Bias', 'Oposisi', 'Konservatif', 'Non Bias'],
+                            datasets: [{
+                                // label: 'Player 1',
+                                data: [koalisi, liberal, bias, oposisi, konservatif, nonBias],
+                                backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                                borderColor: 'rgba(255, 99, 132, 1)',
+                                // pointBackgroundColor: 'rgba(255, 99, 132, 1)',
+                                // pointHoverBackgroundColor: '#fff'
+                            }]
+                        };
+                
+                
+                        // Radar chart options
+                        var radarOptions = {
+                            plugins: {
+                                legend: {
+                                    display: false // Menyembunyikan legend (nama label)
+                                }
+                            },
+                            scale: {
+                                ticks: {
+                                    beginAtZero: true,
+                                    min: 0,
+                                    max: 100,
+                                    stepSize: 20
+                                }
+                            }
+                        };
+                
+                        // Get the context of the canvas element
+                        var ctx = document.getElementById('radarChart').getContext('2d');
+                
+                        // Create the radar chart
+                        var radarChart = new Chart(ctx, {
+                            type: 'radar',
+                            data: radarData,
+                            options: radarOptions
+                        });
+                    </script>
+                </div>
+            </div>
+            <div class="news-item">
+                <div class="news-content">
+                    <a href="#" style="text-decoration: none; color: black;"><strong>A three-legged lion and his brother made the longest recorded swim across a crocodile-infested river</strong></a>
+                </div>
+                <div class="radar-chart"></div>
+            </div>
+            <div class="news-item">
+                <div class="news-content">
+                    <a href="#" style="text-decoration: none; color: black;"><strong>Woman swept to sea while swimming at a Japanese beach is rescued 37 hours later and 50 miles away</strong></a>
+                </div>
+                <div class="radar-chart"></div>
+            </div>
+        </section>
+    </main>
+</body>
+
+</html>

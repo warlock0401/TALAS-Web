@@ -27,13 +27,16 @@ header {
     align-items: center;
     background-color: #fff;
     border-radius: 10px;
-    padding-left: 0%;
+    margin-left: 0%;
+    padding: 10px;
+
     
 }
 
 .left-section .logo img {
-    width: 100px;
-    margin-left: 10px;
+    width: 50px;
+    margin-left: 0px;
+    height: 50px;
 }
 
 .left-section .contact-us {
@@ -50,6 +53,7 @@ header {
 .left-section .contact-us img {
     width: 20px;
 }
+
 
 .right-section {
     display: flex;

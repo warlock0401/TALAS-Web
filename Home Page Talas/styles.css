@@ -123,7 +123,9 @@ aside ul li a {
     width: 70%;
     height: 150px;
     background-color: #ddd;
+    padding-left: 10px;
 }
+
 
 .radar-chart {
     width: 25%;

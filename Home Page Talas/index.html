@@ -16,10 +16,10 @@
                 <img src="Title.png" class="title" style="width: 165px; height: 45px; margin-left: 5px;">
             </div>
             <div class="contact-us">
-                <a href="#"><img src="instagram.png" alt="Instagram"></a>
-                <a href="#"><img src="whatsapp.png" alt="WhatsApp"></a>
-                <a href="#"><img src="facebook.png" alt="Facebook"></a>
-                <a href="#"><img src="linkedin.png" alt="LinkedIn"></a>
+                <a href="https://www.instagram.com/pukulenam.id/"><img src="instagram.png" alt="Instagram"></a>
+                <a href="https://www.whatsapp.com/channel/0029Vacza9qHgZWUh08zyw12"><img src="whatsapp.png" alt="WhatsApp"></a>
+                <a href="https://www.facebook.com/pukulenam.id"><img src="facebook.png" alt="Facebook"></a>
+                <a href="https://www.linkedin.com/company/pukulenam/"><img src="linkedin.png" alt="LinkedIn"></a>
             </div>
         </div>
         <div class="right-section">
@@ -39,20 +39,37 @@
             </ul>
         </aside>
         <section class="news">
-            <div class="news-item">
-                <div class="news-content"></div>
-                <div class="radar-chart"></div>
-            </div>
-            <div class="news-item">
-                <div class="news-content"></div>
-                <div class="radar-chart"></div>
-            </div>
-            <div class="news-item">
-                <div class="news-content"></div>
-                <div class="radar-chart"></div>
-            </div>
+            
         </section>
     </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            fetch('https://66960f4e0312447373c0df49.mockapi.io/api/v1/Test')
+                .then(response => response.json())
+                .then(data => {
+                    const newsSection = document.querySelector('.news');
+                    newsSection.innerHTML = ''; // Clear existing content
+
+                    data.forEach(newsItem => {
+                        const newsElement = document.createElement('div');
+                        newsElement.className = 'news-item';
+
+                        newsElement.innerHTML = `
+                            <div class="news-content">
+                                <h2>${newsItem.name}</h2>
+                                <p>${newsItem.createdAt}</p>
+                                <a href="${newsItem.avatar}" target="_blank">Read more</a>
+                            </div>
+                            <div class="radar-chart"></div>
+                        `;
+
+                        newsSection.appendChild(newsElement);
+                    });
+                })
+                .catch(error => console.error('Error fetching news:', error));
+        });
+    </script>
 </body>
 
 </html>

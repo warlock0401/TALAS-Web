@@ -24,7 +24,7 @@
         </div>
         <div class="right-section">
             <input type="text" placeholder="Search">
-            <span>Tuesday, July 9, 2024</span>
+            <span id="current-date"></span>
         </div>
     </header>
     <main>
@@ -45,6 +45,17 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
+
+            function updateDate() {
+                const dateSpan = document.getElementById('current-date');
+                const now = new Date();
+                const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'};
+                dateSpan.textContent = now.toLocaleDateString('id-ID', options)
+            }
+
+            updateDate();
+
+
             fetch('https://66960f4e0312447373c0df49.mockapi.io/api/v1/Test')
                 .then(response => response.json())
                 .then(data => {

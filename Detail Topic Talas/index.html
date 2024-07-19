@@ -25,7 +25,7 @@
         </div>
         <div class="right-section">
             <input type="text" id="searchBar" placeholder="Search">
-            <span>Tuesday, July 9, 2024</span>
+            <span id="current-date"></span>
         </div>
         <script>
             // Get the search bar element
@@ -55,6 +55,16 @@
         </aside>
         <script>
             document.addEventListener('DOMContentLoaded', function() {
+                
+                function updateDate() {
+                    const dateSpan = document.getElementById('current-date');
+                    const now = new Date();
+                    const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+                    dateSpan.textContent = now.toLocaleDateString('id-ID', options);
+                }
+
+                updateDate();
+                
                 // Get all list items within the ul
                 var listItems = document.querySelectorAll('#topic-list li');
     

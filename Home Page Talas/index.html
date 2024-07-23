@@ -17,13 +17,14 @@
             </div>
             <div class="contact-us">
                 <a href="https://www.instagram.com/pukulenam.id/"><img src="assets/instagram.png" alt="Instagram"></a>
-                <a href="https://www.whatsapp.com/channel/0029Vacza9qHgZWUh08zyw12"><img src="assets/whatsapp.png" alt="WhatsApp"></a>
+                <a href="https://www.whatsapp.com/channel/0029Vacza9qHgZWUh08zyw12"><img src="assets/whatsapp.png"
+                        alt="WhatsApp"></a>
                 <a href="https://www.facebook.com/pukulenam.id"><img src="assets/facebook.png" alt="Facebook"></a>
                 <a href="https://www.linkedin.com/company/pukulenam/"><img src="assets/linkedin.png" alt="LinkedIn"></a>
             </div>
         </div>
         <div class="right-section">
-            <input type="text" placeholder="Search">
+            <input type="text" id="search-bar" placeholder="Search">
             <span id="current-date"></span>
         </div>
     </header>
@@ -39,9 +40,12 @@
             </ul>
         </aside>
         <section class="news">
-            
+
         </section>
     </main>
+    <footer>
+        <p>&copy; PukulEnam 2024</p>
+    </footer>
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
@@ -49,39 +53,54 @@
             function updateDate() {
                 const dateSpan = document.getElementById('current-date');
                 const now = new Date();
-                const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'};
-                dateSpan.textContent = now.toLocaleDateString('id-ID', options)
+                const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+                dateSpan.textContent = now.toLocaleDateString('id-ID', options);
             }
 
             updateDate();
 
+            let allNews = [];
+
+            function displayNews(newsItems) {
+                const newsSection = document.querySelector('.news');
+                newsSection.innerHTML = ''; // Clear existing content
+
+                newsItems.forEach(newsItem => {
+                    const newsElement = document.createElement('div');
+                    newsElement.className = 'news-item';
+
+                    newsElement.innerHTML = `
+                        <div class="news-image"> 
+                            <img src="${newsItem.avatar}" alt="News pic" style="width: 100%; height: 150px; margin-top: 5px">
+                        </div>
+                        <div class="news-content">
+                            <h2>${newsItem.name}</h2>
+                            <p>${newsItem.createdAt}</p>
+                            <a href="${newsItem.avatar}" target="_blank">Read more</a>
+                        </div>
+                        <div class="radar-chart"></div>
+                    `;
+
+                    newsSection.appendChild(newsElement);
+                });
+            }
 
             fetch('https://66960f4e0312447373c0df49.mockapi.io/api/v1/Test')
                 .then(response => response.json())
                 .then(data => {
-                    const newsSection = document.querySelector('.news');
-                    newsSection.innerHTML = ''; // Clear existing content
-
-                    data.forEach(newsItem => {
-                        const newsElement = document.createElement('div');
-                        newsElement.className = 'news-item';
-
-                        newsElement.innerHTML = `
-                            <div class="news-image">
-                                <img src="${newsItem.avatar}" alt="News pic" style="width: 100%; height: 150px; margin-top: 5px">
-                            </div>
-                            <div class="news-content">
-                                <h2>${newsItem.name}</h2>
-                                <p>${newsItem.createdAt}</p>
-                                <a href="${newsItem.avatar}" target="_blank">Read more</a>
-                            </div>
-                            <div class="radar-chart"></div>
-                        `;
-
-                        newsSection.appendChild(newsElement);
-                    });
+                    allNews = data;
+                    displayNews(allNews);
                 })
                 .catch(error => console.error('Error fetching news:', error));
+
+            document.getElementById('search-bar').addEventListener('input', function (event) {
+                const query = event.target.value.toLowerCase();
+                const filteredNews = allNews.filter(newsItem =>
+                    newsItem.name.toLowerCase().includes(query) ||
+                    newsItem.createdAt.toLowerCase().includes(query)
+                );
+                displayNews(filteredNews);
+            });
         });
     </script>
 </body>

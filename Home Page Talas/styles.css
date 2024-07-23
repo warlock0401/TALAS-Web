@@ -146,3 +146,12 @@ aside ul li a {
     top: 25px;
     left: 25px;
 }
+
+footer {
+    text-align: center;
+    padding: 10px 0;
+    background-color: #ff6f61;
+    width: 100%;
+    bottom: 0;
+    color: #fff;
+}

@@ -32,11 +32,20 @@
         <aside>
             <h2>Trending Topics</h2>
             <ul id="trending-topics">
-                <!-- Konten trending topics akan dimuat di sini -->
             </ul>
         </aside>
-        <section class="news">
-        </section>
+        <div class="content">
+            <section class="carousel-container">
+                <div class="carousel-slides">
+                    <!-- Slides will be dynamically added here -->
+                </div>
+                <button class="prev" id="prevBtn">&#10094;</button>
+                <button class="next" id="nextBtn">&#10095;</button>
+            </section>
+            <section class="news">
+                <!-- News items will be dynamically added here -->
+            </section>
+        </div>
     </main>
     <footer>
         <p>&copy; PukulEnam 2024</p>
@@ -53,11 +62,32 @@
 
             updateDate();
 
+            let slideIndex = 0;
             let allNews = [];
+
+            function showSlide(index) {
+                const slides = document.querySelectorAll('.carousel-slide');
+                if (index >= slides.length) {
+                    slideIndex = 0;
+                } else if (index < 0) {
+                    slideIndex = slides.length - 1;
+                } else {
+                    slideIndex = index;
+                }
+
+                const offset = -slideIndex * 100;
+                document.querySelector('.carousel-slides').style.transform = `translateX(${offset}%)`;
+            }
+
+            function moveSlide(step) {
+                const slides = document.querySelectorAll('.carousel-slide');
+                slideIndex = (slideIndex + step + slides.length) % slides.length;
+                showSlide(slideIndex);
+            }
 
             function displayNews(newsItems) {
                 const newsSection = document.querySelector('.news');
-                newsSection.innerHTML = ''; // Clear existing content
+                newsSection.innerHTML = '';
 
                 newsItems.forEach(newsItem => {
                     const newsElement = document.createElement('div');
@@ -79,10 +109,38 @@
                 });
             }
 
+            function displayCarousel(newsItems) {
+                const slidesContainer = document.querySelector('.carousel-slides');
+                slidesContainer.innerHTML = '';
+
+                newsItems.forEach(newsItem => {
+                    const slide = document.createElement('div');
+                    slide.className = 'carousel-slide';
+                    slide.innerHTML = `
+                        <img src="${newsItem.avatar}" alt="News Image">
+                        <div class="carousel-caption">
+                            <h2>${newsItem.name}</h2>
+                            <p>${newsItem.createdAt}</p>
+                            <a href="${newsItem.avatar}" target="_blank">Read more</a>
+                        </div>
+                    `;
+                    slidesContainer.appendChild(slide);
+                });
+
+                // Tampilkan slide pertama
+                showSlide(slideIndex);
+
+                // Auto Slide (Opsional)
+                setInterval(() => {
+                    moveSlide(1);
+                }, 5000); // Ganti slide setiap 5 detik
+            }
+
             fetch('https://66960f4e0312447373c0df49.mockapi.io/api/v1/Test')
                 .then(response => response.json())
                 .then(data => {
                     allNews = data;
+                    displayCarousel(allNews);
                     displayNews(allNews);
                 })
                 .catch(error => console.error('Error fetching news:', error));
@@ -96,12 +154,11 @@
                 displayNews(filteredNews);
             });
 
-
             fetch('http://127.0.0.1:5000/trending-topics')
                 .then(response => response.json())
                 .then(trendingTopics => {
                     const trendingTopicsList = document.getElementById('trending-topics');
-                    trendingTopicsList.innerHTML = ''; 
+                    trendingTopicsList.innerHTML = '';
 
                     trendingTopics.forEach(topic => {
                         const topicElement = document.createElement('li');
@@ -110,6 +167,10 @@
                     });
                 })
                 .catch(error => console.error('Error fetching trending topics:', error));
+
+            // Event listeners for the buttons
+            document.getElementById('prevBtn').addEventListener('click', () => moveSlide(-1));
+            document.getElementById('nextBtn').addEventListener('click', () => moveSlide(1));
         });
     </script>
 </body>

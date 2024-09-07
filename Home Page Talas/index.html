@@ -95,14 +95,13 @@
 
                     newsElement.innerHTML = `
                         <div class="news-image"> 
-                            <img src="${newsItem.avatar}" alt="News pic" style="width: 100%; height: 150px; margin-top: 5px">
+                            <img src="${newsItem.image}" alt="News pic" style="width: 100%; height: 150px; margin-top: 5px">
                         </div>
                         <div class="news-content">
-                            <h2>${newsItem.name}</h2>
-                            <p>${newsItem.createdAt}</p>
-                            <a href="${newsItem.avatar}" target="_blank">Read more</a>
+                            <h2>${newsItem.title}</h2>
+                            <p>${newsItem.content.substring(0, 100)}...</p> <!-- Menampilkan sebagian konten -->
+                            <a href="${newsItem.link}" target="_blank">Read more</a>
                         </div>
-                        <div class="radar-chart"></div>
                     `;
 
                     newsSection.appendChild(newsElement);
@@ -117,11 +116,11 @@
                     const slide = document.createElement('div');
                     slide.className = 'carousel-slide';
                     slide.innerHTML = `
-                        <img src="${newsItem.avatar}" alt="News Image">
+                        <img src="${newsItem.image}" alt="News Image">
                         <div class="carousel-caption">
-                            <h2>${newsItem.name}</h2>
-                            <p>${newsItem.createdAt}</p>
-                            <a href="${newsItem.avatar}" target="_blank">Read more</a>
+                            <h2>${newsItem.title}</h2>
+                            <p>${newsItem.content.substring(0, 100)}...</p>
+                            <a href="${newsItem.link}" target="_blank">Read more</a>
                         </div>
                     `;
                     slidesContainer.appendChild(slide);
@@ -136,37 +135,58 @@
                 }, 5000); // Ganti slide setiap 5 detik
             }
 
-            fetch('https://66960f4e0312447373c0df49.mockapi.io/api/v1/Test')
-                .then(response => response.json())
+            // Fetching data from API
+            fetch('https://08e1-202-31-143-98.ngrok-free.app/api/news', {
+                headers: {
+                    'ngrok-skip-browser-warning': 'true'  // Menambahkan header untuk skip peringatan
+                }
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();  // Memastikan respons dikonversi ke JSON
+                })
                 .then(data => {
                     allNews = data;
-                    displayCarousel(allNews);
-                    displayNews(allNews);
+                    displayCarousel(allNews);  // Menampilkan berita di carousel
+                    displayNews(allNews);  // Menampilkan daftar berita
                 })
                 .catch(error => console.error('Error fetching news:', error));
+
+
 
             document.getElementById('search-bar').addEventListener('input', function (event) {
                 const query = event.target.value.toLowerCase();
                 const filteredNews = allNews.filter(newsItem =>
-                    newsItem.name.toLowerCase().includes(query) ||
-                    newsItem.createdAt.toLowerCase().includes(query)
+                    newsItem.title.toLowerCase().includes(query) || // Menggunakan 'title' sebagai kriteria pencarian
+                    newsItem.content.toLowerCase().includes(query) || // Menggunakan 'content' sebagai kriteria pencarian
+                    newsItem.date.toLowerCase().includes(query) || // Menggunakan 'date' sebagai kriteria pencarian
+                    newsItem.media_bias.toLowerCase().includes(query) // Menggunakan 'media_bias' sebagai kriteria pencarian
                 );
                 displayNews(filteredNews);
             });
 
-            fetch('http://127.0.0.1:5000/trending-topics')
-                .then(response => response.json())
+            fetch('https://08e1-202-31-143-98.ngrok-free.app/api/trending-topics', {
+                headers: {
+                    'ngrok-skip-browser-warning': 'true'  // Menambahkan header untuk bypass warning dari ngrok
+                }
+            })
+                .then(response => response.json())  // Tetap menggunakan JSON karena kita mengharapkan respons berupa JSON
                 .then(trendingTopics => {
                     const trendingTopicsList = document.getElementById('trending-topics');
-                    trendingTopicsList.innerHTML = '';
+                    trendingTopicsList.innerHTML = '';  // Kosongkan daftar sebelumnya
 
                     trendingTopics.forEach(topic => {
                         const topicElement = document.createElement('li');
-                        topicElement.innerHTML = `<a href="${topic.url}" target="_blank">${topic.title}</a>`;
+                        topicElement.textContent = topic.title;  // Menampilkan judul saja
                         trendingTopicsList.appendChild(topicElement);
                     });
                 })
                 .catch(error => console.error('Error fetching trending topics:', error));
+
+
+
 
             // Event listeners for the buttons
             document.getElementById('prevBtn').addEventListener('click', () => moveSlide(-1));
